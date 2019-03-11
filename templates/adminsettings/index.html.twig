@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminsettingsController!{% endblock %}
+
+{% block body %}
+<style>
+
+</style>
+
+<div class="container">
+
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-body">
+                <div class="profile-content">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#routes">Routes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#test">test</a>
+                        </li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div class="tab-pane container active" id="routes">
+                            {% for route in routes %}
+                                <p>{{ route }} </p>
+                            {% endfor %}
+                        </div>
+                        <div class="tab-pane container fade" id="test">
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+{% endblock %}

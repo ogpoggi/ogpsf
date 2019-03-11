@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Product{% endblock %}
+{% form_theme form _self %}
+{% block body %}
+
+    <div class="card">
+        <div class="card-header">
+            <h1><a class="btn btn-primary" href="{{ path('product_index') }}"><i class="fas fa-arrow-alt-circle-left"></i></a>  Create new Product</h1></div>
+        {{ include('product/_form.html.twig') }}
+        {#{{ form_start(formImage) }}#}
+        {#{{ form_widget(formImage) }}#}
+        {#<button type="submit">send</button>#}
+        {#{{ form_end(formImage) }}#}
+    </div>
+
+    {% for image in images %}
+        <img src="{{ vich_uploader_asset(image, 'imageFile') }}">
+    {% endfor %}
+
+{% endblock %}
+
+{% block _product_images_widget %}
+<p> Ajouter vos photos !</p>
+    {{ form_widget(form) }}
+    <button type="button" id="add-image" class="btn btn-primary">Ajouter une image</button>
+{% endblock %}
+
+{% block _product_images_entry_row %}
+    {{ form_widget(form) }}
+{% endblock %}
+
+{% block _product_images_entry_widget %}
+    <div class="form-group" id="block_{{ id }}">
+        <div class="row">
+            <div class="col-10">
+                {{ form_widget(form.imageFile) }}
+            </div>
+            <div class="col-2">
+                <button type="button" data-action="delete" data-target="#block_{{ id }}" class="btn btn-danger">X</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    $('#add-image').click(function () {
+        const index = $('#product_image div.form-group').length;
+        const tmpl = $('#product_images').data('prototype').replace(/__name__/g, index);
+        $('#product_images').append(tmpl);
+
+        handleDeleteButton();
+    });
+
+    function handleDeleteButton() {
+        $('button[data-action="delete"]').click(function () {
+            const target = this.dataset.target;
+            // console.log(target);
+            $(target).remove();
+        })
+    }
+
+    handleDeleteButton();
+</script>
+{% endblock %}

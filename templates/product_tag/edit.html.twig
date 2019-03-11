@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit ProductTag{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-header"><h1><a href="{{ path('product_tag_index') }}"><i class="fas fa-arrow-alt-circle-left"></i></a> Edit ProductTag</h1></div>
+        <div class="card-body">
+            {{ include('product_tag/_form.html.twig', {'button_label': 'Update'}) }}
+
+            {{ include('product_tag/_delete_form.html.twig') }}
+        </div>
+    </div>
+{% endblock %}

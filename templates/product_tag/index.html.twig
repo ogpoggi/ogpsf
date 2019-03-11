@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ProductTag index{% endblock %}
+
+{% block body %}
+
+    <div class="card">
+        <div class="card-header"><h1>ProductTag index</h1></div>
+        <div class="card-body">
+            <a class="btn btn-primary" href="{{ path('product_tag_new') }}">Create new</a>
+            <table id="tableAdmin" class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for product_tag in product_tags %}
+                    <tr>
+                        <td>{{ product_tag.id }}</td>
+                        <td>{{ product_tag.name }}</td>
+                        <td>{{ product_tag.description }}</td>
+                        <td>
+                            <a class="btn btn-success" href="{{ path('product_tag_show', {'id': product_tag.id}) }}">show</a>
+                            <a class="btn btn-warning" href="{{ path('product_tag_edit', {'id': product_tag.id}) }}">edit</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+{% endblock %}

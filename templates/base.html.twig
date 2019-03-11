@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}
+            <style>
+                span.rating i {
+                    color : goldenrod;
+                }
+                footer {
+                    margin-top: auto;
+                    color: white;
+                }
+                body {
+                    display: flex;
+                    flex-direction: column;
+                }
+                html, body {
+                    height: 100%;
+                    padding: 0;
+                    margin: 0;
+                }
+                /* Profile container */
+                .profile {
+                    margin: 20px 0;
+                }
+                /* Profile sidebar */
+                .profile-sidebar {
+                    padding: 20px 0 10px 0;
+                    background: #fff;
+                }
+                .profile-userpic img {
+                    float: none;
+                    display:block;
+                    margin:auto;
+                    width: 50%;
+                    height: 50%;
+                    -webkit-border-radius: 50% !important;
+                    -moz-border-radius: 50% !important;
+                    border-radius: 50% !important;
+                }
+
+                .profile-usertitle {
+                    text-align: center;
+                    margin-top: 20px;
+                }
+
+                .profile-usertitle-name {
+                    color: #5a7391;
+                    font-size: 16px;
+                    font-weight: 600;
+                    margin-bottom: 7px;
+                }
+
+                .profile-usertitle-job {
+                    text-transform: uppercase;
+                    color: #5b9bd1;
+                    font-size: 12px;
+                    font-weight: 600;
+                    margin-bottom: 15px;
+                }
+
+                .profile-userbuttons {
+                    text-align: center;
+                    margin-top: 10px;
+                }
+
+                .profile-userbuttons .btn {
+                    text-transform: uppercase;
+                    font-size: 11px;
+                    font-weight: 600;
+                    padding: 6px 15px;
+                    margin-right: 5px;
+                }
+
+                .profile-userbuttons .btn:last-child {
+                    margin-right: 0px;
+                }
+
+                .profile-usermenu {
+                    margin-top: 30px;
+                }
+
+                .profile-usermenu ul li {
+                    border-bottom: 1px solid #f0f4f7;
+                }
+
+                .profile-usermenu ul li:last-child {
+                    border-bottom: none;
+                }
+
+                .profile-usermenu ul li a {
+                    color: #93a3b5;
+                    font-size: 14px;
+                    font-weight: 400;
+                }
+
+                .profile-usermenu ul li a i {
+                    margin-right: 8px;
+                    font-size: 14px;
+                }
+
+                .profile-usermenu ul li a:hover {
+                    background-color: #fafcfd;
+                    color: #5b9bd1;
+                }
+
+                .profile-usermenu ul li.active {
+                    border-bottom: none;
+                }
+
+                .profile-usermenu ul li.active a {
+                    color: #5b9bd1;
+                    background-color: #f6f9fb;
+                    border-left: 2px solid #5b9bd1;
+                    margin-left: -2px;
+                }
+
+                /* Profile Content */
+                .profile-content {
+                    padding: 20px;
+                    background: #fff;
+                    min-height: 460px;
+                }
+
+                .nav>li {
+                    position: relative;
+                    display: block;
+                }
+
+                #searchform{
+                    position: absolute;
+                    right :15px;
+                }
+
+
+            </style>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
+            <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+        {% endblock %}
+    </head>
+    {#{% block body %}#}
+
+<body>
+
+
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+<nav class="navbar sticky-top navbar-expand-md navbar-dark bg-primary fixed">
+    <a class="navbar-brand" href="{{ path('home') }}">Home</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            {% if is_granted('ROLE_ADMIN') %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Admin
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ path('product_index') }}">Product</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ path('review_index') }}">Review</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ path('user_index') }}">User</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ path('product_tag_index') }}">Tag</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-cog"></i>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ path('adminsettings') }}">All</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ path('infoph') }}">Php Info</a>
+                    </div>
+                </li>
+            {% endif %}
+        </ul>
+
+        <ul class="navbar-nav ml-auto">
+
+            <li class="nav-item">
+                <img src={{ app.user.avatarurl }} height="40px" width="40px">
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ app.user.username }}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{ path('profile') }}">Profile</a>
+                    <a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a>
+                    <div class="dropdown-divider"></div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+{% endif %}
+
+
+
+    <div class="container">
+        {% block body %}
+        {% endblock %}
+        {{ knp_menu_render('breadcrumb', {'currentAsLink':false}) }}
+    </div>
+
+        {% block javascripts %}
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+            <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+            <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+            <script>
+                $(document).ready( function () {
+                    $('#tableAdmin').DataTable();
+                } );
+            </script>
+            <script>
+                $(document).ready( function () {
+                    $('table.display').DataTable();
+                } );
+            </script>
+        {% endblock %}
+    </body>
+{% include('footer.html.twig') %}
+</html>

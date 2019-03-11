@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HistoriqueController!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-sm table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th colspan="2" scope="colgroup">Historique</th>
+                        <th colspan="2" scope="colgroup">User</th>
+                        <th colspan="6" scope="colgroup">Ancien </th>
+                    </tr>
+                    <tr>
+                        <th scope="col">id historique</th>
+                        <th scope="col">modified date</th>
+                        <th scope="col">user id</th>
+                        <th scope="col">user mail</th>
+                        <th scope="col">historique id</th>
+                        <th scope="col">tableModif </th>
+                        <th scope="col">champModif </th>
+                        <th scope="col">oldValue </th>
+                        <th scope="col">newValue </th>
+                        <th scope="col">recordId </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for historique in historiques %}
+                        <tr>
+                            <td>{{ historique.id }}</td>
+                            <td>{{ historique.modifiedDate|date("m/d/Y") }}</td>
+                            <td>{{ historique.user.id }}</td>
+                            <td>{{ historique.user.email }}</td>
+                            <td>{{ historique.historiqueModif.id }}</td>
+                            <td>{{ historique.historiqueModif.tableModif }}</td>
+                            <td>{{ historique.historiqueModif.champModif }}</td>
+                            <td>{{ historique.historiqueModif.oldValue }}</td>
+                            <td>{{ historique.historiqueModif.newValue }}</td>
+                            <td><a href="{{ path('review_show', {'id': historique.historiqueModif.recordId}) }}" >link {{ historique.historiqueModif.recordId }}</a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

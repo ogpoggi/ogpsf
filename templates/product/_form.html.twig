@@ -1,0 +1,11 @@
+{{ form_start(form) }}
+<div class="card">
+    <div class="card-body">
+        {{ form_widget(form) }}
+        <div class="row">
+            <div class="col"><button class="btn btn-primary">{{ button_label|default('Save') }}</button></div>
+
+        </div>
+        {{ form_end(form) }}
+    </div>
+</div>

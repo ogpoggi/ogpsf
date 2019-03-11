@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}API Platform Admin{% endblock %}
+
+{% block body %}
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        {% if is_granted('ROLE_ADMIN') %}
+            <div id="api-platform-admin"></div>
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/plain" id="api-entrypoint">{{ path('api_entrypoint') }}</script>
+    {{ encore_entry_script_tags('admin') }}
+{% endblock %}

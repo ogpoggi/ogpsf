@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Review index{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-header"><h1>Review index</h1></div>
+        <div class="card-body">
+            <a class="btn btn-primary btn-sm" href="{{ path('review_new') }}">Create new</a>
+            <table id="tableAdmin" class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Rating</th>
+                    <th scope="col">actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for review in reviews %}
+                    <tr>
+                        <th scope="row">{{ review.id }}</th>
+                        <td>{{ review.description }}</td>
+                        <td>{{ review.rating }}</td>
+                        <td>
+                            <a class="btn btn-success btn-sm"href="{{ path('review_show', {'id': review.id}) }}">show</a>
+                            <a class="btn btn-warning btn-sm"href="{{ path('review_edit', {'id': review.id}) }}">edit</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

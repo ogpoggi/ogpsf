@@ -1,0 +1,117 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProfileController!{% endblock %}
+
+{% block body %}
+    <!--our content goes here-->
+    <div class="">
+        <div class="row">
+            <div class="col-lg-3 col-md-0 row-sm">
+                <div class="">
+                    <div class="profile-sidebar position-fixed">
+                        <div class="profile-content">
+                            <div class="profile-userpic" >
+                                <img src="{{ app.user.avatar }}" class="img-responsive" alt="">
+                            </div>
+                            <div class="profile-usertitle">
+                                <div class="profile-usertitle-name">
+                                    {{ app.user.nom }} {{ app.user.prenom }} irejoirjzer
+                                </div>
+                                <div class="profile-usertitle-job">
+                                    {{ app.user.email }}
+                                </div>
+                            </div>
+                            {#<div class="profile-userbuttons">#}
+                            {#<button type="button" class="btn btn-success btn-sm">Follow</button>#}
+                            {#<button type="button" class="btn btn-danger btn-sm">Message</button>#}
+                            {#</div>#}
+                            <div class="profile-usermenu sidebar-sticky">
+                                <ul class="nav flex-column">
+                                    <li class="active nav-item">
+                                        <a href="#" class="nav-link active">
+                                            <i class="fa fa-home"></i>
+                                            Overview </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ path('profile_account', {'id':user.id}) }}">
+                                            {#<a href="{{ path('product_edit', {'id': product.id}) }}">edit</a>#}
+                                            <i class="fa fa-user"></i>
+                                            Account Settings </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- END MENU -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-5">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="profile-content">
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="tab" href="#home">Products</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#menu1">Review</a>
+                                </li>
+                            </ul>
+                        <div class="tab-content">
+                                <div class="tab-pane container active" id="home">
+                                    {% if user.products|length > 0 %}
+                                        <table id="" class="display">
+                                            <thead>
+                                            <th>Title</th>
+                                            <th>Tag</th>
+                                            {#<th>Description</th>#}
+                                            <th>Actions</th>
+                                            </thead>
+                                            <tbody>
+                                            {% for product in user.products %}
+                                                <tr>
+                                                    <td>{{ product.title }}</td>
+                                                    <td>{{ product.tag.name }}</td>
+                                                    {#<td>{{ product.description|raw }}</td>#}
+                                                    <td>
+                                                        <a class="btn btn-success btn-sm" href="{{ path('product_show', {'slug': product.slug, 'id': product.id } ) }}">See</a>
+                                                        <a class="btn btn-warning btn-sm" href="{{ path('product_edit', {'slug': product.slug,'id': product.id}) }}">edit</a>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            {% else %}
+                                                <td> Aucune donnée </td>
+                                            </tbody>
+                                        </table>
+                                    {% endif %}
+                                </div>
+                                <div class="tab-pane container fade" id="menu1">
+                                    {% if user.reviews|length > 0 %}
+                                        <table id="" class="display">
+                                            <thead>
+                                            <th>Rating</th>
+                                            <th>Product title</th>
+                                            <th>Actions</th>
+                                            </thead>
+                                            <tbody>
+                                            {% for review in user.reviews %}
+                                            <tr>
+                                                <td>{{ review.rating }}</td>
+                                                <td>{{ review.product.title }}</td>
+                                                <td><a class="btn btn-success btn-sm" href="{{ path('review_show', {'id': review.id}) }}">See</a></td>
+                                            </tr>
+                                            {% endfor %}
+                                            {% else %}
+                                                <td> Aucune donnée </td>
+                                            </tbody>
+                                        </table>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+{% endblock %}
